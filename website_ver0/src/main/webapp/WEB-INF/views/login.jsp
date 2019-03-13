@@ -17,14 +17,14 @@
         <div class="card card-signin my-5">
           <div class="card-body">
             <h5 class="card-title text-center">Sign In</h5>
-            <form class="form-signin">
+            <form method="post" action="/login" class="form-signin">
               <div class="form-label-group">
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-                <label for="inputEmail">Email address</label>
+                <input type="text" name="username" value="admin" class="form-control" placeholder="id" required autofocus>
+                <label for="inputId">ID</label>
               </div>
 
               <div class="form-label-group">
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                <input type="password" name="password" value="admin" class="form-control" placeholder="Password" required>
                 <label for="inputPassword">Password</label>
               </div>
 
