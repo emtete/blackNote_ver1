@@ -5,9 +5,9 @@
   <!-- /#wrapper -->
 
   <!-- Bootstrap core JavaScript -->
-  <script src="resources/vendor/jquery/jquery.min.js"></script>
-  <script src="resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="resources/js/siteNavigation.js"></script>
+  <script src="../resources/vendor/jquery/jquery.min.js"></script>
+  <script src="../resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../resources/js/siteNavigation.js"></script>
 
   <!-- Menu Toggle Script -->
   <script>
