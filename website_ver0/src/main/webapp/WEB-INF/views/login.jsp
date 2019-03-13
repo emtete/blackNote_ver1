@@ -19,12 +19,12 @@
             <h5 class="card-title text-center">Sign In</h5>
             <form method="post" action="/login" class="form-signin">
               <div class="form-label-group">
-                <input type="text" name="username" value="admin" class="form-control" placeholder="id" required autofocus>
+                <input type="text" name="username" class="form-control" placeholder="id" required autofocus>
                 <label for="inputId">ID</label>
               </div>
 
               <div class="form-label-group">
-                <input type="password" name="password" value="admin" class="form-control" placeholder="Password" required>
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
                 <label for="inputPassword">Password</label>
               </div>
 

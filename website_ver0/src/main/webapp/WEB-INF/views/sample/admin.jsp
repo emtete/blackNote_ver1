@@ -8,5 +8,12 @@
 </head>
 <body>
 	<h1>sample/admin page</h1>
+	
+	<form action="/customLogout" method='post' >
+		<!-- <input type="submit" value='logout'/> -->
+		<input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }" />
+		<button>logout</button>
+	</form>
+	
 </body>
 </html>
