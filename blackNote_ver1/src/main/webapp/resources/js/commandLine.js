@@ -288,7 +288,7 @@ function applyFolderToTag( folder ){
 					property;
 
 			html += ( isEmpty( folder, property ) ) ?
-							tag['li1'] + '\n' :
+							tag['li1'] +   '\n' :
 							createOuterTag( folder[ property ], outerStart, innerStart, separator+order )
 							+ tag['li1'] + '\n';
 			
