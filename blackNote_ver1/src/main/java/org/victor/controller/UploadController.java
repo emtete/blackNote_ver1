@@ -1,6 +1,8 @@
 package org.victor.controller;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,13 +54,23 @@ public class UploadController {
 		
 		String uploadFolder = "/Users/victor/work/upload";
 		
+		//makeFolder
+		File uploadPath = new File( uploadFolder, getFolder() );
+		log.info("uploadPath : "+ uploadPath);
+		
+		if( uploadPath.exists() == false) {
+			uploadPath.mkdirs();
+		}
+		
 		for( MultipartFile multipartFile : uploadFile ) {
 		
+			String uploadFileName = multipartFile.getOriginalFilename();
 			log.info("-------------------------------------------");
-			log.info("Upload file Name : "+ multipartFile.getOriginalFilename() );
+			log.info("Upload file Name : "+ uploadFileName );
 			log.info("Upload File Size : "+ multipartFile.getSize() );
 			
-			File saveFile = new File( uploadFolder, multipartFile.getOriginalFilename() );
+//			File saveFile = new File( uploadFolder, multipartFile.getOriginalFilename() );
+			File saveFile = new File( uploadPath, uploadFileName );
 		
 			try {
 				multipartFile.transferTo( saveFile );
@@ -67,6 +79,17 @@ public class UploadController {
 			}
 		}
 		
+	}
+	
+	public String getFolder() {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		Date date = new Date();
+		
+		String str = sdf.format(date);
+		
+		return str.replace("-", File.separator );
 	}
 	
 }
