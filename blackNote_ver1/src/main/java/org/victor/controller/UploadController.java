@@ -41,4 +41,49 @@ public class UploadController {
 		
 	}
 	
+	@GetMapping("/uploadAjax")
+	public void uploadAjax() {
+		
+		log.info("uploadAjax..");
+	}
+	
+	@PostMapping("/uploadAjaxAction")
+	public void uploadAjaxAction( MultipartFile[] uploadFile ) {
+		
+		String uploadFolder = "/Users/victor/work/upload";
+		
+		for( MultipartFile multipartFile : uploadFile ) {
+		
+			log.info("-------------------------------------------");
+			log.info("Upload file Name : "+ multipartFile.getOriginalFilename() );
+			log.info("Upload File Size : "+ multipartFile.getSize() );
+			
+			File saveFile = new File( uploadFolder, multipartFile.getOriginalFilename() );
+		
+			try {
+				multipartFile.transferTo( saveFile );
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
