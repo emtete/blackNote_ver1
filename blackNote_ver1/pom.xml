@@ -210,6 +210,21 @@
 		    <artifactId>spring-security-taglibs</artifactId>
 		    <version>5.0.6.RELEASE</version>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
+		<dependency>
+		    <groupId>net.coobird</groupId>
+		    <artifactId>thumbnailator</artifactId>
+		    <version>0.4.8</version>
+		</dependency>
+		
+		<!-- apache tika -->
+		<dependency>
+		    <groupId>org.apache.tika</groupId>
+		    <artifactId>tika-parsers</artifactId>
+		    <version>1.18</version>
+		</dependency>
+		
 
 	</dependencies>
     <build>
