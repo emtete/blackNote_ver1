@@ -4,15 +4,22 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import org.apache.tika.Tika;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.victor.domain.AttachFileDTO;
 
 import lombok.extern.log4j.Log4j;
 import net.coobird.thumbnailator.Thumbnailator;
@@ -54,9 +61,11 @@ public class UploadController {
 		log.info("uploadAjax..");
 	}
 	
-	@PostMapping("/uploadAjaxAction")
-	public void uploadAjaxAction( MultipartFile[] uploadFile ) {
+	@PostMapping( value = "/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<AttachFileDTO>> uploadAjaxAction( MultipartFile[] uploadFile ) {
 		
+		List<AttachFileDTO> list = new ArrayList<>();
 		String uploadFolder = "/Users/victor/work/upload";
 		
 		//makeFolder
@@ -68,10 +77,16 @@ public class UploadController {
 		}
 		
 		for( MultipartFile multipartFile : uploadFile ) {
-		
+			
 			UUID uuid = UUID.randomUUID();
+			AttachFileDTO attachDTO = new AttachFileDTO(); 
+			list.add( attachDTO );
 			
 			String uploadFileName = uuid.toString() + "_" + multipartFile.getOriginalFilename();
+			attachDTO.setFileName( multipartFile.getOriginalFilename() );
+			attachDTO.setUuid( uuid.toString() );
+			attachDTO.setUploadPath( getFolder() );
+			
 			log.info("-------------------------------------------");
 			log.info("Upload file Name : "+ uploadFileName );
 			log.info("Upload File Size : "+ multipartFile.getSize() );
@@ -84,6 +99,7 @@ public class UploadController {
 				
 				if( checkImageType(saveFile) ) {
 					
+					attachDTO.setImage(true);
 					FileOutputStream thumbnail = new FileOutputStream( new File(uploadPath, "s_"+uploadFileName) );
 					Thumbnailator.createThumbnail( multipartFile.getInputStream(), thumbnail, 100, 100);
 					thumbnail.close();
@@ -93,7 +109,8 @@ public class UploadController {
 			}
 		}
 		
-	}
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}//uploadAjaxAction()
 	
 	
 	private String getFolder() {
