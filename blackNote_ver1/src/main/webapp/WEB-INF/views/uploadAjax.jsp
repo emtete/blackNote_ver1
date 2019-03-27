@@ -4,15 +4,22 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link href="/resources/css/upload.css" rel="stylesheet">
 <title>Insert title here</title>
 </head>
 <body>
-	<!-- <form  method="post" enctype="multipart/form-data"> -->
+	
 	<div class="uploadDiv">	
 		<input type="file" name="uploadFile" multiple>
 	</div>
 	<button id='uploadBtn'>upload</button>
-	<!-- </form> -->
+	
+	<div class="uploadResult">
+		<ul>
+		
+		</ul>
+	</div>
+	
 
 <script src="/resources/vendor/jquery/jquery.min.js" ></script>
 <script>
@@ -36,13 +43,15 @@
 	
 	$(document).ready(function(){
 		
+		var cloneUploadDiv = $('.uploadDiv').clone();
+		
 		$('#uploadBtn').on( 'click', function(e){
 			
 			var formData = new FormData(),
 				inputFile = $('input[name="uploadFile"]'),
 				files = inputFile[0].files;
 			
-			console.log( files );
+			/* console.log( files ); */
 			
 			for( var i=0; i < files.length; i++ ){
 				if( !checkExtension( files[i].name, files[i].size ) ){
@@ -60,12 +69,31 @@
 				type : 'POST',
 				dataType : 'json',
 				success : function( result ){
-					console.log( result );
+					showResult( result );
+					console.log( result[0]['fileName'] );
+					$('.uploadDiv').html( cloneUploadDiv.html() );
 				}
 			});//ajax
 			
 		});//#uploadBtn
 	});//document ready
+	
+	function showResult( resultArr ){
+		
+		var arrLength = resultArr.length;
+		var str = '';
+		
+		resultArr.forEach( function( obj, i ){
+			
+			if( obj.image ){
+				str += '<li>' + '<image src="/resources/img/attach.jpg">'+ obj.fileName + '</li>';
+			}else{
+				str += '<li>' + obj['fileName'] + '</li>';			
+			}
+		});
+		
+		$('.uploadResult ul').append(str);
+	}
 </script>
 
 </body>
